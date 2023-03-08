@@ -74,7 +74,7 @@ fun SignInContent(
         ) {
             Text(
                 text = SIGN_IN,
-                fontSize = 15.sp
+                fontSize = 16.sp
             )
         }
         Row {
