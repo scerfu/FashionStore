@@ -68,8 +68,8 @@ fun SignInContent(
         Button(
             onClick = {
                 keyboard?.hide()
-                throw RuntimeException("Test Crash")
-               // signIn(email.text, password.text)
+                //throw RuntimeException("Test Crash")
+               signIn(email.text, password.text)
             }
         ) {
             Text(

@@ -20,7 +20,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,25 +32,40 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.cyberwalker.fashionstore.R
 import com.cyberwalker.fashionstore.dump.BottomNav
+import com.cyberwalker.fashionstore.dump.BottomNavItem
 import com.cyberwalker.fashionstore.dump.vertical
+import com.cyberwalker.fashionstore.navigation.Screen
+import com.cyberwalker.fashionstore.profile.ProfileScreen
 import com.cyberwalker.fashionstore.ui.theme.*
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel(),
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     onAction: (actions: HomeScreenActions) -> Unit,
     navController: NavHostController
 ) {
+
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+
+    var currentRoute by remember { mutableStateOf(navBackStackEntry?.destination?.route?:BottomNavItem.Home.screen_route)}
+
+    val setActiveTab: (String) -> Unit ={
+        currentRoute = it
+    }
+
     Scaffold(
         scaffoldState = scaffoldState,
         bottomBar = {
-            BottomNav(navController = navController)
+            BottomNav(currentRoute = currentRoute, setActiveTab = setActiveTab )
         }
     ) { innerPadding ->
-        HomeScreenContent(modifier = Modifier.padding(innerPadding), onAction = onAction)
+        when (currentRoute){
+            BottomNavItem.Home.screen_route -> HomeScreenContent(modifier = Modifier.padding(innerPadding), onAction = onAction)
+            BottomNavItem.Profile.screen_route -> ProfileScreen(onAction = onAction)
+        }
     }
 }
 
@@ -335,4 +350,5 @@ private fun GridOfImages(onAction: (actions: HomeScreenActions) -> Unit,) {
 
 sealed class HomeScreenActions {
     object Details : HomeScreenActions()
+    object SignIn : HomeScreenActions()
 }
