@@ -20,6 +20,7 @@ package com.cyberwalker.fashionstore.navigation
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -28,18 +29,24 @@ import com.cyberwalker.fashionstore.detail.DetailScreenActions
 import com.cyberwalker.fashionstore.dump.animatedComposable
 import com.cyberwalker.fashionstore.home.HomeScreen
 import com.cyberwalker.fashionstore.home.HomeScreenActions
+import com.cyberwalker.fashionstore.signin.SignInScreenActions
+import com.cyberwalker.fashionstore.signin.SignInScreen
+import com.cyberwalker.fashionstore.signup.SignUpScreen
+import com.cyberwalker.fashionstore.signup.SignUpScreenActions
 import com.cyberwalker.fashionstore.splash.SplashScreen
 import com.cyberwalker.fashionstore.splash.SplashScreenActions
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 
 sealed class Screen(val name: String, val route: String) {
+    object SignIn : Screen("signin", "signin")
+    object SignUp : Screen("signup", "signup")
     object Splash : Screen("splash", "splash")
     object Home : Screen("home", "home")
     object Detail : Screen("detail", "detail")
 }
 
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun FashionNavGraph(
     modifier: Modifier = Modifier,
@@ -54,11 +61,26 @@ fun FashionNavGraph(
         modifier = modifier
     ) {
         animatedComposable(Screen.Splash.route) {
-            SplashScreen(onAction = actions::navigateToHome)
+            SplashScreen(onAction = actions::navigateToSignIn)
+        }
+
+        animatedComposable(Screen.SignIn.route) {
+            SignInScreen(
+                onAction = actions::navigateToSignIn,
+                onAction1 = actions::navigateToSignUp,
+                onAction2 = actions::navigateToHome
+            )
+        }
+
+        animatedComposable(Screen.SignUp.route) {
+            SignUpScreen(onAction = actions::navigateToSignUp,
+                navigateBack = {
+                    navController.popBackStack()
+                })
         }
 
         animatedComposable(Screen.Home.route) {
-            HomeScreen(onAction = actions::navigateFromHome,navController = navController)
+            HomeScreen(onAction = actions::navigateFromHome, navController = navController)
         }
 
         animatedComposable(Screen.Detail.route) {
@@ -68,9 +90,26 @@ fun FashionNavGraph(
 }
 
 class NavActions(private val navController: NavController) {
-    fun navigateToHome(_A: SplashScreenActions) {
+
+    fun navigateToSignIn(_A: SignInScreenActions) {
+        navController.navigate(Screen.SignIn.name) {
+            popUpTo(Screen.SignIn.route) {
+                inclusive = true
+            }
+        }
+    }
+
+    fun navigateToSignUp(_A: SignUpScreenActions) {
+        navController.navigate(Screen.SignUp.name) {
+            popUpTo(Screen.SignIn.route) {
+                inclusive = true
+            }
+        }
+    }
+
+    fun navigateToHome(actions: HomeScreenActions) {
         navController.navigate(Screen.Home.name) {
-            popUpTo(Screen.Splash.route){
+            popUpTo(Screen.Splash.route) {
                 inclusive = true
             }
         }
@@ -85,7 +124,7 @@ class NavActions(private val navController: NavController) {
     }
 
     fun navigateFromDetails(actions: DetailScreenActions) {
-        when(actions) {
+        when (actions) {
             DetailScreenActions.Back -> navController.popBackStack()
         }
     }

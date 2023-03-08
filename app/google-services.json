@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "418913936349",
+    "project_id": "loginfirebase-50786",
+    "storage_bucket": "loginfirebase-50786.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:418913936349:android:95b9e36e51d412f40c0c34",
+        "android_client_info": {
+          "package_name": "com.cyberwalker.fashionstore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "418913936349-lbeh40gnbi1v24o7rncgv9chnv04nsmb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJwdJURxNT-WJTgqcNn4VuxtkHPT7b-ec"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "418913936349-lbeh40gnbi1v24o7rncgv9chnv04nsmb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:418913936349:android:93fcfaa11b171c570c0c34",
+        "android_client_info": {
+          "package_name": "com.example.loginfirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "418913936349-lbeh40gnbi1v24o7rncgv9chnv04nsmb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJwdJURxNT-WJTgqcNn4VuxtkHPT7b-ec"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "418913936349-lbeh40gnbi1v24o7rncgv9chnv04nsmb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

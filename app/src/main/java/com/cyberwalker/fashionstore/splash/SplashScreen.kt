@@ -20,7 +20,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -31,6 +30,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cyberwalker.fashionstore.R
+import com.cyberwalker.fashionstore.signin.SignInScreenActions
 import com.cyberwalker.fashionstore.ui.theme.dark
 import com.cyberwalker.fashionstore.ui.theme.large
 import com.cyberwalker.fashionstore.ui.theme.small_caption
@@ -39,7 +39,7 @@ import com.cyberwalker.fashionstore.ui.theme.small_caption
 fun SplashScreen(
     viewModel: SplashViewModel = hiltViewModel(),
     scaffoldState: ScaffoldState = rememberScaffoldState(),
-    onAction: (actions: SplashScreenActions) -> Unit
+    onAction: (actions: SignInScreenActions) -> Unit
 ) {
     Scaffold(
         scaffoldState = scaffoldState
@@ -49,7 +49,7 @@ fun SplashScreen(
 }
 
 @Composable
-private fun SplashScreenContent(modifier: Modifier, onAction: (actions: SplashScreenActions) -> Unit) {
+private fun SplashScreenContent(modifier: Modifier, onAction: (actions: SignInScreenActions) -> Unit) {
     Column(
         modifier = modifier
             .padding(40.dp)
@@ -85,7 +85,8 @@ private fun SplashScreenContent(modifier: Modifier, onAction: (actions: SplashSc
             modifier = Modifier
                 .weight(1F)
                 .align(Alignment.CenterHorizontally).clickable {
-                    onAction(SplashScreenActions.LoadHome)
+                    onAction(SignInScreenActions.LoadSignIn)
+                    //SplashScreenActions.LoadHome
                 },
             painter = painterResource(id = R.drawable.splash_cta),
             contentDescription = null
