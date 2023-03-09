@@ -120,6 +120,13 @@ class NavActions(private val navController: NavController) {
             HomeScreenActions.Details -> {
                 navController.navigate(Screen.Detail.name)
             }
+            HomeScreenActions.SignIn -> {
+                navController.navigate(Screen.SignIn.name) {
+                    popUpTo(Screen.SignIn.route) {
+                        inclusive = true
+                    }
+                }
+            }
         }
     }
 
